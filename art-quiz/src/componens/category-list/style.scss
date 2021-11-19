@@ -1,0 +1,36 @@
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  column-gap: 30px;
+  row-gap: 30px;
+  padding: 50px;
+  transform: translateX(-100vw);
+  transition: transform 1s ease-in-out;
+}
+
+.category-item {
+  width: 400px;
+  height: 200px;
+  position: relative;
+  background-size: cover;
+  cursor: pointer;
+  transition: transform .5s ease-in-out;
+
+  &::after {
+    content: attr(data-category);
+    position: absolute;
+    width: 280px;
+    height: 30px;
+    left: calc(50% - 280px/2);
+    top: calc(50% - 30px/2);
+    font-size: 2rem;
+    text-transform: capitalize;
+    color: white
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

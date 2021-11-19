@@ -1,3 +1,11 @@
+a {
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -10,18 +18,29 @@ body {
 .footer {
   height: 10vh;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   color: white;
   font-size: 3rem;
 }
 
-h1 {
-  margin: 0 auto;
+.header {
+  justify-content: space-between;
+}
+
+.h1 {
+  justify-self: center;
+}
+
+.footer {
+  justify-content: space-around;
 }
 
 #app {
   min-height: 80vh;
+}
+
+.creator {
+  min-width: 350px;
 }
 
 .creator span {
