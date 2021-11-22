@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 a {
   text-decoration: none;
 
@@ -6,21 +10,36 @@ a {
   }
 }
 
-body {
-  padding: 0;
+p {
   margin: 0;
+}
+
+h1 {
+  margin: 0;
+}
+
+body {
   background-color: black;
   user-select: none;
-  padding: 0 50px;
+}
+
+button {
+  cursor: pointer;
 }
 
 .header,
 .footer {
-  height: 10vh;
+  height: 9vh;
   display: flex;
   align-items: center;
   color: white;
-  font-size: 3rem;
+  font-size: 2rem;
+}
+
+.header,
+.footer,
+#app {
+  padding: 0 20px;
 }
 
 .header {

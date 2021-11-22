@@ -11,15 +11,15 @@
 }
 
 .category-item {
-  width: 400px;
-  height: 200px;
+  width: 450px;
+  height: 125px;
   position: relative;
   background-size: cover;
   cursor: pointer;
   transition: transform .5s ease-in-out;
 
   &::after {
-    content: attr(data-category);
+    content: attr(data-title);
     position: absolute;
     width: 280px;
     height: 30px;

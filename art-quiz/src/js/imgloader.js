@@ -1,4 +1,4 @@
-export const createImage = (src) => new Promise((res, rej) => {
+export const loadImage = (src) => new Promise((res, rej) => {
   const img = new Image();
   img.onload = () => res(img);
   img.onerror = rej;

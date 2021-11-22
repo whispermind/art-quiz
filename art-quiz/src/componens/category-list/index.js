@@ -1,7 +1,8 @@
 import './style.scss'
-import '../state/state.js'
-import { createImage } from '../imgloader.js'
-const categories = {
+import { hide } from '../../js/hideAnimation';
+import { loadImage } from '../../js/imgloader';
+const ROOT = document.querySelector('#app');
+const CATEGORIES = {
   authors: {
     1: 'author category 1',
     2: 'author category 2',
@@ -36,6 +37,7 @@ class CategoryList extends HTMLElement {
     super();
   }
   connectedCallback() {
+    this.classList.add('categories');
     this.#render();
   }
   async #render() {
@@ -45,22 +47,26 @@ class CategoryList extends HTMLElement {
     imagesURL.forEach((elem, index) => {
       const categoryItem = document.createElement('div');
       categoryItem.classList.add('category-item');
-      console.log(elem);
       categoryItem.style.backgroundImage = `url(${elem.value.currentSrc})`;
-      categoryItem.dataset.category = categories[categoriesType][index + 1];
+      categoryItem.dataset.title = CATEGORIES[categoriesType][index + 1];
+      categoryItem.dataset.number = index + 1;
       this.append(categoryItem);
     });
-    this.style.transform = 'translateX(0)';
-    this.addEventListener('click', (event) => {
-      if (!event.target.closest('.category-item')) return
-
+    setTimeout(() => this.style.transform = 'translateX(0)', 0);
+    this.addEventListener('click', (clickEvent) => {
+      if (!clickEvent.target.closest('.category-item')) return
+      this.addEventListener('transitionend', (event) => {
+        if (event.target !== this) return
+        ROOT.innerHTML = `<quiz-game data-type='${categoriesType}' data-category='${clickEvent.target.dataset.number}'>`;
+      });
+      hide(this);
     });
   }
   async #getImages(start) {
     const images = [];
     for (let i = 0; i < 12; i++)
-      images.push(createImage(`../../images/img/${start + i}.jpg`));
-    return await Promise.allSettled(images);
+      images.push(loadImage(`../../images/img/${start + i}.jpg`));
+    return Promise.allSettled(images);
   }
 }
 customElements.define("category-list", CategoryList);

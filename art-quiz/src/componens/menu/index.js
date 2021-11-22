@@ -1,25 +1,18 @@
 import './style.scss';
-import '../category-list'
+import { hide } from '../../js/hideAnimation'
+import { template } from './template';
+const ROOT = document.querySelector('#app');
 class Menu extends HTMLElement {
   constructor() {
     super();
   }
   connectedCallback() {
+    this.classList.add('menu');
     this.#render();
   }
-  async #render() {
-    const template = `
-      <div id="authors" class="menu-option">
-        <div class="authors-quiz menu-image"></div>
-        <p>Authors</p>
-      </div>
-      <div id="pictures" class="menu-option">
-        <div class="pictures-quiz menu-image"></div>
-        <p>Pictures</p>
-      </div>`;
-    this.classList.add('menu');
+  #render() {
     this.innerHTML = template;
-    this.style.transform = `translateX(0)`;
+    setTimeout(() => this.style.transform = `translateX(0)`, 0);
     this.addEventListener('click', this.#quizOption);
   }
   #quizOption(event) {
@@ -30,9 +23,9 @@ class Menu extends HTMLElement {
   #showCategories(id) {
     this.addEventListener('transitionend', (event) => {
       if (event.target !== this) return
-      app.innerHTML = `<category-list class="categories" data-category=${id}>`;
+      ROOT.innerHTML = `<category-list data-category=${id}>`;
     });
-    this.style.transform = 'translateX(-100vw)';
+    hide(this);
   }
 }
 customElements.define("main-menu", Menu);
