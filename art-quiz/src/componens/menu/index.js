@@ -1,5 +1,5 @@
 import './style.scss';
-import { hide } from '../../js/hideAnimation'
+import { hide } from '../../js/hide'
 import { template } from './template';
 const ROOT = document.querySelector('#app');
 class Menu extends HTMLElement {

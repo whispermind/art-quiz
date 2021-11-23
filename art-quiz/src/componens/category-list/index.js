@@ -1,5 +1,5 @@
 import './style.scss'
-import { hide } from '../../js/hideAnimation';
+import { hide } from '../../js/hide';
 import { loadImage } from '../../js/imgloader';
 const ROOT = document.querySelector('#app');
 const CATEGORIES = {
@@ -56,6 +56,10 @@ class CategoryList extends HTMLElement {
         for (let key in played) {
           if (played[key] === 'true') correctAnswers++
         }
+        const results = document.createElement('div');
+        results.classList.add('results-button');
+        results.textContent = 'RESULTS';
+        categoryItem.append(results);
         categoryItem.dataset.answered = `${String(correctAnswers)}/10`;
       };
       categoryItem.style.backgroundImage = `url(${elem.value.currentSrc})`;
@@ -65,10 +69,14 @@ class CategoryList extends HTMLElement {
     });
     setTimeout(() => this.style.transform = 'translateX(0)', 0);
     this.addEventListener('click', (clickEvent) => {
-      if (!clickEvent.target.closest('.category-item')) return
+      const target = clickEvent.target.closest('.results-button') || clickEvent.target.closest('.category-item');
+      if (!target) return
       this.addEventListener('transitionend', (event) => {
         if (event.target !== this) return
-        ROOT.innerHTML = `<quiz-game data-type='${categoriesType}' data-category='${clickEvent.target.dataset.number}'>`;
+        const component = clickEvent.target.closest('.results-button') ?
+          `<quiz-results data-type='${categoriesType}' data-category='${clickEvent.target.parentNode.dataset.number}'>` :
+          `<quiz-game data-type='${categoriesType}' data-category='${clickEvent.target.dataset.number}'>`;
+        ROOT.innerHTML = component;
       });
       hide(this);
     });
@@ -76,7 +84,7 @@ class CategoryList extends HTMLElement {
   async #getImages(start) {
     const images = [];
     for (let i = 0; i < 12; i++)
-      images.push(loadImage(`../../images/img/${start + i}.jpg`));
+      images.push(loadImage(`./images/img/${start + i}.jpg`));
     return Promise.allSettled(images);
   }
 }

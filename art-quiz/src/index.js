@@ -3,6 +3,7 @@ import './styles/styles.scss';
 import './componens/menu';
 import './componens/category-list';
 import './componens/quiz';
+import './componens/results'
 (async function () {
   const { state } = await import('./js/state.js')
   const home = document.querySelector('.home-button');

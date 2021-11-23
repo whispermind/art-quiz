@@ -1,6 +1,6 @@
 import './style.scss'
 import { loadImage } from '../../js/imgloader';
-import { hide } from '../../js/hideAnimation'
+import { hide } from '../../js/hide'
 import images from '../../js/data';
 import { template } from './template';
 const ROOT = document.querySelector('#app');
@@ -12,7 +12,7 @@ class quiz extends HTMLElement {
     if (this.quizType === 'authors') this.currentQuestion += 12;
     this.category = this.currentQuestion;
     this.currentQuestion *= 10;
-    this.lastQuestion = this.currentQuestion - 1;
+    this.lastQuestion = this.currentQuestion - 9;
     this.score = 0;
     this.answers = [];
   }
@@ -46,7 +46,8 @@ class quiz extends HTMLElement {
     answers.push(`${images[this.currentQuestion].author}`);
     while (answers.length !== 4) {
       const randomValue = Math.floor(Math.random() * (240 - 0 + 1)) + 0;
-      if (!answers.includes(randomValue)) answers.push(`${images[randomValue].author}`);
+      const str = `${images[randomValue].author}`;
+      if (!answers.includes(`${str}`)) answers.push(`${str}`);
     }
     answers.sort(() => Math.random() - Math.random());
     answers.forEach((elem) => {

@@ -17,6 +17,7 @@
   background-size: cover;
   cursor: pointer;
   transition: transform .5s ease-in-out;
+  overflow: hidden;
 
   &::after {
     content: attr(data-title);
@@ -41,8 +42,25 @@
   &:hover {
     transform: scale(1.1);
   }
+
+  &:hover .results-button {
+    transform: translateY(-35px);
+  }
 }
 
 .unplayed {
   opacity: .5;
+}
+
+.results-button {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  cursor: pointer;
+  bottom: -35px;
+  transition: transform 1s ease-in-out;
 }
