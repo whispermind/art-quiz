@@ -12,12 +12,13 @@ class quiz extends HTMLElement {
     if (this.quizType === 'authors') this.currentQuestion += 12;
     this.category = this.currentQuestion;
     this.currentQuestion *= 10;
-    this.lastQuestion = this.currentQuestion - 9;
+    this.lastQuestion = this.currentQuestion - 1;
     this.score = 0;
     this.answers = [];
   }
   async connectedCallback() {
-    this.state = await import('../../js/state.js');
+    const {state} = await import('../../js/state.js');
+    this.state = state;
     this.classList.add('quiz');
     this.#render();
   }

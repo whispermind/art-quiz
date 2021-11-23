@@ -37,18 +37,27 @@ class CategoryList extends HTMLElement {
     super();
   }
   async connectedCallback() {
-    this.state = await import('../../js/state.js');
+    const { state } = await import('../../js/state.js');
+    this.state = state;
     this.classList.add('categories');
     this.#render();
-    console.log(this.state);
   }
   async #render() {
     const categoriesType = this.dataset.category;
     const start = categoriesType === 'authors' ? 0 : 120;
     const imagesURL = await this.#getImages(start);
     imagesURL.forEach((elem, index) => {
+      const played = this.state[`category-${categoriesType === 'authors' ? index + 13 : index + 1}`];
       const categoryItem = document.createElement('div');
       categoryItem.classList.add('category-item');
+      if (!played) categoryItem.classList.add('unplayed');
+      else {
+        let correctAnswers = 0;
+        for (let key in played) {
+          if (played[key] === 'true') correctAnswers++
+        }
+        categoryItem.dataset.answered = `${String(correctAnswers)}/10`;
+      };
       categoryItem.style.backgroundImage = `url(${elem.value.currentSrc})`;
       categoryItem.dataset.title = CATEGORIES[categoriesType][index + 1];
       categoryItem.dataset.number = index + 1;

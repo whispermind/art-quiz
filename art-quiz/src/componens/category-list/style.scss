@@ -30,6 +30,14 @@
     color: white
   }
 
+  &::before {
+    content: attr(data-answered);
+    right: 0;
+    position: absolute;
+    color: white;
+    font-size: 2rem;
+  }
+
   &:hover {
     transform: scale(1.1);
   }
