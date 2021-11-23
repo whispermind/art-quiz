@@ -17,7 +17,7 @@ class quiz extends HTMLElement {
     this.answers = [];
   }
   async connectedCallback() {
-    const {state} = await import('../../js/state.js');
+    const { state } = await import('../../js/state.js');
     this.state = state;
     this.classList.add('quiz');
     this.#render();
@@ -39,7 +39,7 @@ class quiz extends HTMLElement {
   }
   async #authorQuestion(questionContainer, answersContainer) {
     questionContainer.textContent = `Who is the author of this picture?`
-    const url = `../../images/img/${this.currentQuestion}.jpg`;
+    const url = `./images/img/${this.currentQuestion}.jpg`;
     const answers = [];
     await loadImage(url);
     answersContainer.insertAdjacentHTML('beforebegin', `<img src="${url}">`);
@@ -59,10 +59,10 @@ class quiz extends HTMLElement {
   }
   async #imageQuestion(questionContainer, answersContainer) {
     questionContainer.textContent = `Which picture was painted by ${images[this.currentQuestion].author}?`;
-    const urls = [`../../images/img/${this.currentQuestion}.jpg`];
+    const urls = [`./images/img/${this.currentQuestion}.jpg`];
     const promises = [];
     while (urls.length !== 4) {
-      const url = `../../images/img/${Math.floor(Math.random() * (240 - 0 + 1)) + 0}.jpg`;
+      const url = `./images/img/${Math.floor(Math.random() * (240 - 0 + 1)) + 0}.jpg`;
       if (!urls.includes(url)) urls.push(url);
     }
     urls.forEach((url) => {
@@ -81,7 +81,7 @@ class quiz extends HTMLElement {
     this.#showQuestion();
   }
   #checkAnswer(answer) {
-    const imageURL = `../../images/img/${this.currentQuestion}.jpg`;
+    const imageURL = `./images/img/${this.currentQuestion}.jpg`;
     const questionResult = document.querySelector('.question-result');
     const result = document.querySelector('.result');
     const next = document.querySelector('.next');
