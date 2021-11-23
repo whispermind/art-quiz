@@ -13,5 +13,7 @@ export const template = `
 <button class="next">NEXT</button>
 </div>
 <div class="total-result">
+ <p class="score"></p>
+ <button class="close-button">CONTINUE</button>
 </div>
 `;

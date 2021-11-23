@@ -1,3 +1,3 @@
 export const hide = (elem) => {
-  elem.style.transform = 'translateX(-100vw)';
+  elem.style.transform = '';
 }

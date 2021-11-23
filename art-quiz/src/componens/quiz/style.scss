@@ -53,7 +53,23 @@
   }
 }
 
-.question-result {
+.image-answer {
+  width: 50%;
+  cursor: pointer;
+  border: none;
+
+  & img {
+    width: 100%;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  & img:hover {
+    transform: scale(1.1);
+  }
+}
+
+.question-result,
+.total-result {
   display: none;
   position: absolute;
   top: -10vh;
@@ -66,7 +82,8 @@
 
 .correct,
 .wrong,
-.end {
+.end,
+.show {
   display: flex;
   justify-content: center;
   align-items: center;

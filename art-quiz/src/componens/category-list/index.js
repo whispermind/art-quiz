@@ -36,9 +36,11 @@ class CategoryList extends HTMLElement {
   constructor() {
     super();
   }
-  connectedCallback() {
+  async connectedCallback() {
+    this.state = await import('../../js/state.js');
     this.classList.add('categories');
     this.#render();
+    console.log(this.state);
   }
   async #render() {
     const categoriesType = this.dataset.category;
