@@ -22,8 +22,12 @@ class quiz extends HTMLElement {
     this.classList.add('quiz');
     this.#render();
   }
+  disconnectedCallback() {
+    if (this.interval) clearInterval(this.interval);
+  }
   #render() {
     this.innerHTML = template;
+    this.processed = false;
     const button = document.querySelector('.categories-button');
     button.addEventListener('click', () => this.#toCategories());
     this.#nextQuestion();
@@ -32,10 +36,17 @@ class quiz extends HTMLElement {
     const questionContainer = document.querySelector('.question');
     const answersContainer = document.querySelector('.answers');
     answersContainer.addEventListener('click', event => {
-      if (!event.target.closest('.answer')) return
+      if (!event.target.closest('.answer') || this.processed) return
+      this.processed = true;
       this.#checkAnswer(event.target);
     });
     this.quizType === 'authors' ? this.#authorQuestion(questionContainer, answersContainer) : this.#imageQuestion(questionContainer, answersContainer);
+    if (this.state.settings.timer) {
+      const timer = document.createElement('div');
+      timer.classList.add('timer');
+      this.append(timer);
+      this.#timer(Number(this.state.settings.timing), timer);
+    }
   }
   async #authorQuestion(questionContainer, answersContainer) {
     questionContainer.textContent = `Who is the author of this picture?`
@@ -81,7 +92,8 @@ class quiz extends HTMLElement {
     })
     this.#showQuestion();
   }
-  #checkAnswer(answer) {
+  #checkAnswer(answer, end) {
+    clearInterval(this.interval);
     const imageURL = `./images/img/${this.currentQuestion}.jpg`;
     const questionResult = document.querySelector('.question-result');
     const result = document.querySelector('.result');
@@ -89,7 +101,7 @@ class quiz extends HTMLElement {
     const imageContainer = document.querySelector('.correct-image');
     const authorContainer = document.querySelector('.correct-author');
     const audio = new Audio();
-    if (answer.textContent === images[this.currentQuestion].author || this.quizType === 'picutres' && answer.src.slice(answer.src.lastIndexOf('/'), answer.src.length) === imageURL.slice(imageURL.lastIndexOf('/'), imageURL.length)) {
+    if (!end && answer.textContent === images[this.currentQuestion].author || !end && this.quizType === 'pictures' && answer.src.slice(answer.src.lastIndexOf('/'), answer.src.length) === imageURL.slice(imageURL.lastIndexOf('/'), imageURL.length)) {
       questionResult.classList.add('correct');
       result.textContent = 'Correct';
       this.score++;
@@ -142,6 +154,17 @@ class quiz extends HTMLElement {
   }
   #showQuestion() {
     this.style.transform = `translateX(0)`;
+  }
+  #timer(timing, container) {
+    container.textContent = timing;
+    this.interval = setInterval(() => {
+      timing--;
+      container.textContent = timing + 's';
+      if (timing === 0) {
+        clearInterval(this.interval);
+        this.#checkAnswer(null, true);
+      }
+    }, 1000);
   }
 }
 customElements.define("quiz-game", quiz);
