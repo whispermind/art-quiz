@@ -92,8 +92,17 @@
 
 .wrong {
   color: red;
+
+  & img {
+    border: solid 1px red;
+  }
 }
 
 .correct {
   color: green;
+
+  & img {
+    border: solid 1px green;
+  }
+
 }
