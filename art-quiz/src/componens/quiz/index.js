@@ -88,17 +88,21 @@ class quiz extends HTMLElement {
     const next = document.querySelector('.next');
     const imageContainer = document.querySelector('.correct-image');
     const authorContainer = document.querySelector('.correct-author');
-    if (answer.textContent === images[this.currentQuestion].author || answer.src === imageURL) {
+    const audio = new Audio();
+    if (answer.textContent === images[this.currentQuestion].author || this.quizType === 'picutres' && answer.src.slice(answer.src.lastIndexOf('/'), answer.src.length) === imageURL.slice(imageURL.lastIndexOf('/'), imageURL.length)) {
       questionResult.classList.add('correct');
       result.textContent = 'Correct';
       this.score++;
       this.answers.push('true');
+      audio.src = './sounds/coin.wav'
     }
     else {
       questionResult.classList.add('wrong');
       result.textContent = 'Wrong'
       this.answers.push('false');
+      audio.src = './sounds/kaspersky.mp3';
     }
+    if (this.state.settings.sounds) audio.play();
     imageContainer.src = imageURL;
     authorContainer.textContent = `${images[this.currentQuestion].name} was painted by ${images[this.currentQuestion].author} in ${images[this.currentQuestion].year}`;
     next.addEventListener('click', event => {
@@ -117,6 +121,8 @@ class quiz extends HTMLElement {
     const score = document.querySelector('.score');
     const categoriesButton = document.querySelector('.close-button');
     const categoryAnswers = this.state[`category-${this.category}`];
+    const audio = new Audio('./sounds/end.wav');
+    if (this.state.settings.sounds) audio.play();
     resultContainer.classList.add('show');
     score.textContent = `your score is ${this.score}/10`;
     categoriesButton.addEventListener('click', () => this.#toCategories());
