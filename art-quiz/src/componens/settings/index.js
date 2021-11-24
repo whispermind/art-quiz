@@ -17,14 +17,17 @@ class settings extends HTMLElement {
     const timer = document.querySelector('#timer');
     const sounds = document.querySelector('#sounds');
     const timing = document.querySelector('#timing');
+    const volume = document.querySelector('#volume');
     setTimeout(() => this.style.transform = `translateX(0)`, 0);
     timer.checked = this.state.settings.timer;
     sounds.checked = this.state.settings.sounds;
     timing.value = this.state.settings.timing;
+    volume.value = this.state.settings.volume;
     this.addEventListener('change', (event) => {
       if (event.target === timer) this.state.settings.timer = event.target.checked;
       if (event.target === sounds) this.state.settings.sounds = event.target.checked;
       if (event.target === timing) this.state.settings.timing = event.target.value;
+      if (event.target === volume) this.state.settings.volume = event.target.value;
     });
   }
 }

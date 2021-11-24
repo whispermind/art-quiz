@@ -3,5 +3,6 @@ export const state = {
     sounds: true,
     timer: true,
     timing: 30,
+    volume: 1,
   }
 };

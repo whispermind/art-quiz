@@ -101,6 +101,7 @@ class quiz extends HTMLElement {
     const imageContainer = document.querySelector('.correct-image');
     const authorContainer = document.querySelector('.correct-author');
     const audio = new Audio();
+    audio.volume = this.state.settings.volume;
     if (!end && answer.textContent === images[this.currentQuestion].author || !end && this.quizType === 'pictures' && answer.src.slice(answer.src.lastIndexOf('/'), answer.src.length) === imageURL.slice(imageURL.lastIndexOf('/'), imageURL.length)) {
       questionResult.classList.add('correct');
       result.textContent = 'Correct';
@@ -134,6 +135,7 @@ class quiz extends HTMLElement {
     const categoriesButton = document.querySelector('.close-button');
     const categoryAnswers = this.state[`category-${this.category}`];
     const audio = new Audio('./sounds/end.wav');
+    audio.volume = this.state.settings.volume;
     if (this.state.settings.sounds) audio.play();
     resultContainer.classList.add('show');
     score.textContent = `your score is ${this.score}/10`;
