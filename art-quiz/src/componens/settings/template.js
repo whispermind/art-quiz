@@ -11,6 +11,6 @@ export const template = `<div>
       TIMER
       <input type="checkbox" checked id="timer"></input>
     </label>
-    <input type="number" value="30" id="timing"></input>
+    <input type="number" min="5" max="30" value="30" id="timing" step='5'></input>
   </div>
 </div>`;

@@ -23,6 +23,7 @@ class settings extends HTMLElement {
     sounds.checked = this.state.settings.sounds;
     timing.value = this.state.settings.timing;
     volume.value = this.state.settings.volume;
+    timing.onkeypress = () => false;
     this.addEventListener('change', (event) => {
       if (event.target === timer) this.state.settings.timer = event.target.checked;
       if (event.target === sounds) this.state.settings.sounds = event.target.checked;

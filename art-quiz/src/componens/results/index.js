@@ -23,6 +23,7 @@ class quizResults extends HTMLElement {
     const descriptions = [];
     const urls = [];
     const promises = [];
+    const button = document.createElement('button');
     for (let i = this.currentImage; i >= this.lastImage; i--) {
       urls.push(`./images/img/${i}.jpg`);
       descriptions.push(`${images[i].name} was painted by ${images[i].author} in ${images[i].year}`);
@@ -42,7 +43,6 @@ class quizResults extends HTMLElement {
       this.append(container);
       setTimeout(() => this.style.transform = 'translateX(0)', 0);
     })
-    const button = document.createElement('button');
     button.textContent = 'CATEGORIES';
     button.classList.add('categories-button');
     this.append(button);

@@ -108,12 +108,14 @@ class quiz extends HTMLElement {
       this.score++;
       this.answers.push('true');
       audio.src = './sounds/coin.wav'
+      answer.style.backgroundColor = 'green';
     }
     else {
       questionResult.classList.add('wrong');
       result.textContent = 'Wrong'
       this.answers.push('false');
       audio.src = './sounds/kaspersky.mp3';
+      answer.style.backgroundColor = 'red';
     }
     if (this.state.settings.sounds) audio.play();
     imageContainer.src = imageURL;
