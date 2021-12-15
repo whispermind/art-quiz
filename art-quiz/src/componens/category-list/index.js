@@ -79,7 +79,7 @@ class CategoryList extends HTMLElement {
       categoryItem.dataset.title = CATEGORIES[type][index + 1];
       categoryItem.dataset.number = index + 1;
       if (!categoryItem.classList.contains('unplayed')) {
-        categoryItem.append(this.getResults());
+        categoryItem.append(CategoryList.getResults());
       }
       this.append(categoryItem);
     });
