@@ -1,5 +1,5 @@
 .menu {
-  width: 100%;
+  width: 100vw;
   height: 80vh;
   display: flex;
   justify-content: center;
@@ -12,7 +12,7 @@
 .menu-option {
   padding: 0 50px;
   cursor: pointer;
-  transition: transform .5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
 
   &:hover {
     transform: scale(1.1);
@@ -25,14 +25,21 @@
 }
 
 .menu-image {
-  width: 400px;
-  height: 400px;
+  width: 22vw;
+  height: 22vw;
+  background-size: cover;
+  border-radius: 20%;
+  transition: border-radius 0.5s ease-in-out;
+
+  &:hover {
+    border-radius: 10%;
+  }
 }
 
 .authors-quiz {
-  background-image: url(../../images/img/1.jpg);
+  background-image: url(../../images/img/240.jpg);
 }
 
 .pictures-quiz {
-  background-image: url(../../images/img/0.jpg);
+  background-image: url(../../images/img/72.jpg);
 }

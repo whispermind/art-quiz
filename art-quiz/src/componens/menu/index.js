@@ -1,31 +1,36 @@
 import './style.scss';
-import { hide } from '../../js/hide'
+import hide from '../../js/hide';
 import { template } from './template';
+
 const ROOT = document.querySelector('#app');
+
 class Menu extends HTMLElement {
-  constructor() {
-    super();
-  }
   connectedCallback() {
     this.classList.add('menu');
-    this.#render();
+    this.render();
   }
-  #render() {
+
+  render() {
     this.innerHTML = template;
-    setTimeout(() => this.style.transform = `translateX(0)`, 0);
-    this.addEventListener('click', this.#quizOption);
+    setTimeout(() => {
+      this.style.transform = `translateX(0)`;
+    }, null);
+    this.addEventListener('click', this.quizOption);
   }
-  #quizOption(event) {
+
+  quizOption(event) {
     const target = event.target.closest('.menu-option');
-    if (!target) return false
-    this.#showCategories(target.id);
+    if (!target) return false;
+    this.showCategories(target.id);
+    return true;
   }
-  #showCategories(id) {
+
+  showCategories(id) {
     this.addEventListener('transitionend', (event) => {
-      if (event.target !== this) return
+      if (event.target !== this) return;
       ROOT.innerHTML = `<category-list data-category=${id}>`;
     });
     hide(this);
   }
 }
-customElements.define("main-menu", Menu);
+customElements.define('main-menu', Menu);

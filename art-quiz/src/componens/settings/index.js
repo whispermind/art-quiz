@@ -1,35 +1,38 @@
-import './style.scss'
+import './style.scss';
 import { template } from './template';
-import { hide } from '../../js/hide'
-const ROOT = document.querySelector('#app');
+
 class settings extends HTMLElement {
-  constructor() {
-    super();
-  }
   async connectedCallback() {
-    const { state } = await import('../../js/state.js');
+    const { state } = await import('../../js/state');
     this.state = state;
     this.classList.add('settings');
-    this.#render();
+    this.render();
+    this.setState();
   }
-  #render() {
+
+  render() {
     this.innerHTML = template;
-    const timer = document.querySelector('#timer');
-    const sounds = document.querySelector('#sounds');
-    const timing = document.querySelector('#timing');
-    const volume = document.querySelector('#volume');
-    setTimeout(() => this.style.transform = `translateX(0)`, 0);
-    timer.checked = this.state.settings.timer;
-    sounds.checked = this.state.settings.sounds;
-    timing.value = this.state.settings.timing;
-    volume.value = this.state.settings.volume;
-    timing.onkeypress = () => false;
+    this.timer = document.querySelector('#timer');
+    this.sounds = document.querySelector('#sounds');
+    this.timing = document.querySelector('#timing');
+    this.volume = document.querySelector('#volume');
+    setTimeout(() => {
+      this.style.transform = `translateX(0)`;
+    }, null);
+    this.timing.onkeypress = () => false;
+  }
+
+  setState() {
+    this.timer.checked = this.state.settings.timer;
+    this.sounds.checked = this.state.settings.sounds;
+    this.timing.value = this.state.settings.timing;
+    this.volume.value = this.state.settings.volume;
     this.addEventListener('change', (event) => {
-      if (event.target === timer) this.state.settings.timer = event.target.checked;
-      if (event.target === sounds) this.state.settings.sounds = event.target.checked;
-      if (event.target === timing) this.state.settings.timing = event.target.value;
-      if (event.target === volume) this.state.settings.volume = event.target.value;
+      if (event.target === this.timer) this.state.settings.timer = event.target.checked;
+      if (event.target === this.sounds) this.state.settings.sounds = event.target.checked;
+      if (event.target === this.timing) this.state.settings.timing = event.target.value;
+      if (event.target === this.volume) this.state.settings.volume = event.target.value;
     });
   }
 }
-customElements.define("settings-state", settings);
+customElements.define('settings-state', settings);

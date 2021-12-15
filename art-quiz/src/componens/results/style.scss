@@ -12,10 +12,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 300px;
-  height: 300px;
+  height: 125px;
   background-size: cover;
-  width: 49%;
+  background-position: center center;
+  width: 43vw;
   cursor: pointer;
   color: white;
   font-size: 2rem;
@@ -32,12 +32,12 @@
 }
 
 .wrong-result {
-  filter: grayscale(100%);
-  border: solid 1px red;
+  filter: grayscale(20%);
+  border: solid 1.5px red;
 }
 
 .correct-result {
-  border: solid 1px green;
+  border: solid 1.5px green;
 }
 
 .categories-button {

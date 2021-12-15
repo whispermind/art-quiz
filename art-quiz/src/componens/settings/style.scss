@@ -9,9 +9,17 @@
   transform: translateX(-200vw);
 }
 
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  text-align: center;
+}
+
 .timer {
   position: absolute;
-  top: 50%;
-  color: red;
-  font-size: 2.5rem;
+  top: calc(50% - 3rem);
+  left: calc(50% - 3rem);
+  color: white;
+  font-size: 6rem;
 }

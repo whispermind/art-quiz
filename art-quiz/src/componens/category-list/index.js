@@ -1,6 +1,7 @@
-import './style.scss'
-import { hide } from '../../js/hide';
+import './style.scss';
+import hide from '../../js/hide';
 import { loadImage } from '../../js/imgloader';
+/* eslint no-magic-numbers: ["error", { "ignore": [1, 13] }]*/
 const ROOT = document.querySelector('#app');
 const CATEGORIES = {
   authors: {
@@ -30,62 +31,89 @@ const CATEGORIES = {
     10: 'pictures category 10',
     11: 'pictures category 11',
     12: 'pictures category 12',
-  }
-}
+  },
+};
 class CategoryList extends HTMLElement {
-  constructor() {
-    super();
-  }
   async connectedCallback() {
-    const { state } = await import('../../js/state.js');
+    const { state } = await import('../../js/state');
     this.state = state;
     this.classList.add('categories');
     this.#render();
   }
+
   async #render() {
     const categoriesType = this.dataset.category;
-    const start = categoriesType === 'authors' ? 0 : 120;
-    const imagesURL = await this.#getImages(start);
-    imagesURL.forEach((elem, index) => {
-      const played = this.state[`category-${categoriesType === 'authors' ? index + 13 : index + 1}`];
-      const categoryItem = document.createElement('div');
-      categoryItem.classList.add('category-item');
-      if (!played) categoryItem.classList.add('unplayed');
-      else {
-        let correctAnswers = 0;
-        for (let key in played) {
-          if (played[key] === 'true') correctAnswers++
-        }
-        const results = document.createElement('div');
-        results.classList.add('results-button');
-        results.textContent = 'RESULTS';
-        categoryItem.append(results);
-        categoryItem.dataset.answered = `${String(correctAnswers)}/10`;
-      };
-      categoryItem.style.backgroundImage = `url(${elem.value.currentSrc})`;
-      categoryItem.dataset.title = CATEGORIES[categoriesType][index + 1];
-      categoryItem.dataset.number = index + 1;
-      this.append(categoryItem);
-    });
-    setTimeout(() => this.style.transform = 'translateX(0)', 0);
+    const authorQuizPosition = 0;
+    const pictureQuizPosition = 120;
+    const start = categoriesType === 'authors' ? authorQuizPosition : pictureQuizPosition;
+    const imagesURL = await CategoryList.getImages(start);
+    this.addCategories(imagesURL, categoriesType);
+
+    setTimeout(() => {
+      this.style.transform = 'translateX(0)';
+    }, null);
+
     this.addEventListener('click', (clickEvent) => {
-      const target = clickEvent.target.closest('.results-button') || clickEvent.target.closest('.category-item');
-      if (!target) return
+      const target = clickEvent.target.closest('.results-button')
+        || clickEvent.target.closest('.category-item');
+      if (!target) return;
       this.addEventListener('transitionend', (event) => {
-        if (event.target !== this) return
-        const component = clickEvent.target.closest('.results-button') ?
-          `<quiz-results data-type='${categoriesType}' data-category='${clickEvent.target.parentNode.dataset.number}'>` :
-          `<quiz-game data-type='${categoriesType}' data-category='${clickEvent.target.dataset.number}'>`;
+        if (event.target !== this) return;
+        const component = clickEvent.target.closest('.results-button')
+          ? `<quiz-results data-type='${categoriesType}' data-category='${clickEvent.target.parentNode.dataset.number}'>`
+          : `<quiz-game data-type='${categoriesType}' data-category='${clickEvent.target.dataset.number}'>`;
         ROOT.innerHTML = component;
       });
       hide(this);
     });
   }
-  async #getImages(start) {
+
+  addCategories(images, type) {
+    images.forEach((elem, index) => {
+      
+      const stateIndex = `category-${
+        type === 'authors' ? index + 13 : index + 1
+      }`;
+      const categoryItem = CategoryList.getCategory(this.state[stateIndex]);
+      categoryItem.style.backgroundImage = `url(${elem.value.currentSrc})`;
+      categoryItem.dataset.title = CATEGORIES[type][index + 1];
+      categoryItem.dataset.number = index + 1;
+      if (!categoryItem.classList.contains('unplayed')) {
+        categoryItem.append(this.getResults());
+      }
+      this.append(categoryItem);
+    });
+  }
+
+  static getResults() {
+    const results = document.createElement('div');
+    results.textContent = 'RESULTS';
+    results.classList.add('results-button');
+    return results;
+  }
+
+  static getCategory(played) {
+    const categoryItem = document.createElement('div');
+    let correctAnswers = 0;
+    if (played) {
+      Object.keys(played).forEach((key) => {
+        if (played[key] === 'true') correctAnswers += 1;
+      });
+    } else {
+      categoryItem.classList.add('unplayed');
+    }
+    categoryItem.dataset.answered = `${String(correctAnswers)}/10`;
+    categoryItem.classList.add('category-item');
+    return categoryItem;
+  }
+
+  static getImages(start) {
     const images = [];
-    for (let i = 0; i < 12; i++)
-      images.push(loadImage(`./images/img/${start + i}.jpg`));
+    const imageAmount = 12;
+    for (let pos = 0; pos < imageAmount; pos += 1) {
+      images.push(loadImage(`./images/img/${start + pos}.jpg`));
+    }
     return Promise.allSettled(images);
   }
 }
-customElements.define("category-list", CategoryList);
+customElements.define('category-list', CategoryList);

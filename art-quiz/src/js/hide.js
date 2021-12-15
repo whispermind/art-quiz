@@ -1,3 +1,4 @@
-export const hide = (elem) => {
-  elem.style.transform = '';
+export default function hide(elem) {
+  const elemToHide = elem;
+  elemToHide.style.transform = '';
 }

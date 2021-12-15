@@ -4,5 +4,5 @@ export const state = {
     timer: true,
     timing: 30,
     volume: 1,
-  }
+  },
 };

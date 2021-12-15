@@ -1,13 +1,53 @@
 {
-  "version": "0.1.0",
-  "description": "My new js application",
-  "private": true,
-  "name": "art-quiz",
+  "name": "webpack-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "rss-scripts start",
-    "build": "rss-scripts build"
+    "start": "set NODE_ENV=development&&webpack serve --open",
+    "dev": "set NODE_ENV=development&&webpack",
+    "build": "set NODE_ENV=production&&webpack",
+    "lint": "eslint --fix src/**/*.js",
+    "format": "prettier -w ."
   },
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "rss-scripts": "^0.2.4"
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-transform-runtime": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^10.1.0",
+    "css-loader": "^6.5.1",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "html-loader": "^3.0.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.5",
+    "postcss": "^8.4.4",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.0.1",
+    "prettier": "2.5.1",
+    "pug": "^2.0.4",
+    "pug-loader": "^2.4.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass": "^1.44.0",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.16.5",
+    "regenerator-runtime": "^0.11.1"
   }
 }
