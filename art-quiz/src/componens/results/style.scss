@@ -17,27 +17,27 @@
   background-position: center center;
   width: 43vw;
   cursor: pointer;
-  color: white;
+  color: #ffffff;
   font-size: 2rem;
   text-align: center;
-
-  &:hover .result-description {
-    opacity: 1;
-  }
 }
 
 .result-description {
   transition: opacity 1s ease-in-out;
   opacity: 0;
+
+  .result-container:hover & {
+    opacity: 1;
+  }
 }
 
 .wrong-result {
   filter: grayscale(20%);
-  border: solid 1.5px red;
+  border: solid 1.5px #ff0000;
 }
 
 .correct-result {
-  border: solid 1.5px green;
+  border: solid 1.5px #008000;
 }
 
 .categories-button {

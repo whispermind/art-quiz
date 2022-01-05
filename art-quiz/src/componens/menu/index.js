@@ -14,7 +14,7 @@ class Menu extends HTMLElement {
     this.innerHTML = template;
     setTimeout(() => {
       this.style.transform = `translateX(0)`;
-    }, null);
+    }, 0);
     this.addEventListener('click', this.quizOption);
   }
 

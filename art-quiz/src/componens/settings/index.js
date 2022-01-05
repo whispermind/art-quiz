@@ -18,7 +18,7 @@ class settings extends HTMLElement {
     this.volume = document.querySelector('#volume');
     setTimeout(() => {
       this.style.transform = `translateX(0)`;
-    }, null);
+    }, 0);
     this.timing.onkeypress = () => false;
   }
 

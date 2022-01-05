@@ -5,12 +5,19 @@ import { loadImage } from '../../js/imgloader';
 import { template } from './template';
 /* eslint no-magic-numbers: ["error", { "ignore": [1, 240, 0, 10] }]*/
 const ROOT = document.querySelector('#app');
+const authorsCategoryName = 'authors';
+const authorsRange = 12;
+const maxPicturesRange = 240;
+const minPicturesRange = 1;
+const wrongSound = './sounds/kaspersky.mp3';
+const correctSound = './sounds/coin.wav';
+const endSound = './sounds/end.wav';
 class quiz extends HTMLElement {
   constructor() {
     super();
     this.quizType = this.dataset.type;
     this.currentQuestion = Number(this.dataset.category);
-    if (this.quizType === 'authors') this.currentQuestion += 12;
+    if (this.quizType === authorsCategoryName) this.currentQuestion += authorsRange;
     this.category = this.currentQuestion;
     this.currentQuestion *= 10;
     this.lastQuestion = this.currentQuestion - 10;
@@ -46,7 +53,7 @@ class quiz extends HTMLElement {
       this.checkAnswer(event.target);
     });
     if (this.state.settings.timer) this.setTimer();
-    if (this.quizType === 'authors') this.authorQuestion(questionContainer, answersContainer);
+    if (this.quizType === authorsCategoryName) this.authorQuestion(questionContainer, answersContainer);
     else this.imageQuestion(questionContainer, answersContainer);
   }
 
@@ -85,20 +92,23 @@ class quiz extends HTMLElement {
 
   randomizeQuestions(amount) {
     const quizOption = [];
-    const type = this.quizType === 'authors';
+    const type = this.quizType === authorsCategoryName;
     quizOption.push(
       type
         ? `${images[this.currentQuestion].author}`
         : `./images/img/${this.currentQuestion}.jpg`
     );
     while (quizOption.length !== amount) {
-      const randomValue = Math.floor(Math.random() * (240 - 0 + 1)) + 0;
+      const randomValue = quiz.getRandom(maxPicturesRange, minPicturesRange);
       const str = type
         ? `${images[randomValue].author}`
-        : `./images/img/${Math.floor(Math.random() * (240 - 0 + 1)) + 0}.jpg`;
+        : `./images/img/${quiz.getRandom(maxPicturesRange, minPicturesRange)}.jpg`;
       if (!quizOption.includes(`${str}`)) quizOption.push(`${str}`);
     }
     return quizOption;
+  }
+  static getRandom(max, min){
+    return Math.floor(Math.random() * (max - min) + min);
   }
 
   async imageQuestion(questionContainer, answersContainer) {
@@ -167,7 +177,7 @@ class quiz extends HTMLElement {
     const resultContainer = document.querySelector('.result');
     resultContainer.textContent = status ? 'Correct' : 'Wrong';
     questionResult.classList.add(status ? 'correct' : 'wrong');
-    this.play(status ? './sounds/coin.wav' : './sounds/kaspersky.mp3');
+    this.play(status ? correctSound : wrongSound);
     if (status) {
       this.score += 1;
       this.answers.push('true');
@@ -177,7 +187,7 @@ class quiz extends HTMLElement {
     setTimeout(() => {
       questionResult.style.transform = 'translateY(0)';
       this.unsetTimer();
-    }, null);
+    }, 0);
   }
 
   nextEvent() {
@@ -186,7 +196,7 @@ class quiz extends HTMLElement {
       if (event.target !== this) return;
       this.removeEventListener('transitionend', transitionHandler);
       if (this.currentQuestion === this.lastQuestion) {
-        this.play('./sounds/end.wav');
+        this.play(endSound);
         this.showResults();
         return;
       }

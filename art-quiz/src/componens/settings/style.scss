@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #ffffff;
   height: 80vh;
   transition: transform 1s ease-in-out;
   transform: translateX(-200vw);
@@ -20,6 +20,6 @@
   position: absolute;
   top: calc(50% - 3rem);
   left: calc(50% - 3rem);
-  color: white;
+  color: #ffffff;
   font-size: 6rem;
 }

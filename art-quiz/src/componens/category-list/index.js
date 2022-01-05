@@ -3,36 +3,10 @@ import hide from '../../js/hide';
 import { loadImage } from '../../js/imgloader';
 /* eslint no-magic-numbers: ["error", { "ignore": [1, 13] }]*/
 const ROOT = document.querySelector('#app');
-const CATEGORIES = {
-  authors: {
-    1: 'author category 1',
-    2: 'author category 2',
-    3: 'author category 3',
-    4: 'author category 4',
-    5: 'author category 5',
-    6: 'author category 6',
-    7: 'author category 7',
-    8: 'author category 8',
-    9: 'author category 9',
-    10: 'author category 10',
-    11: 'author category 11',
-    12: 'author category 12',
-  },
-  pictures: {
-    1: 'pictures category 1',
-    2: 'pictures category 2',
-    3: 'pictures category 3',
-    4: 'pictures category 4',
-    5: 'pictures category 5',
-    6: 'pictures category 6',
-    7: 'pictures category 7',
-    8: 'pictures category 8',
-    9: 'pictures category 9',
-    10: 'pictures category 10',
-    11: 'pictures category 11',
-    12: 'pictures category 12',
-  },
-};
+const authorQuizPosition = 0;
+const pictureQuizPosition = 120;
+const authorsCategoryName = 'authors';
+const authorsRange = 12;
 class CategoryList extends HTMLElement {
   async connectedCallback() {
     const { state } = await import('../../js/state');
@@ -43,15 +17,13 @@ class CategoryList extends HTMLElement {
 
   async #render() {
     const categoriesType = this.dataset.category;
-    const authorQuizPosition = 0;
-    const pictureQuizPosition = 120;
-    const start = categoriesType === 'authors' ? authorQuizPosition : pictureQuizPosition;
+    const start = categoriesType === authorsCategoryName ? authorQuizPosition : pictureQuizPosition;
     const imagesURL = await CategoryList.getImages(start);
     this.addCategories(imagesURL, categoriesType);
 
     setTimeout(() => {
       this.style.transform = 'translateX(0)';
-    }, null);
+    }, 0);
 
     this.addEventListener('click', (clickEvent) => {
       const target = clickEvent.target.closest('.results-button')
@@ -70,14 +42,14 @@ class CategoryList extends HTMLElement {
 
   addCategories(images, type) {
     images.forEach((elem, index) => {
-      
+      const incIndex = index + 1;
       const stateIndex = `category-${
-        type === 'authors' ? index + 13 : index + 1
+        type === authorsCategoryName ? incIndex + authorsRange : incIndex
       }`;
       const categoryItem = CategoryList.getCategory(this.state[stateIndex]);
       categoryItem.style.backgroundImage = `url(${elem.value.currentSrc})`;
-      categoryItem.dataset.title = CATEGORIES[type][index + 1];
-      categoryItem.dataset.number = index + 1;
+      categoryItem.dataset.title = `${type} category ${incIndex};`
+      categoryItem.dataset.number = incIndex;
       if (!categoryItem.classList.contains('unplayed')) {
         categoryItem.append(CategoryList.getResults());
       }

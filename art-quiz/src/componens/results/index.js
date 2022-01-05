@@ -5,12 +5,13 @@ import { loadImage } from '../../js/imgloader';
 /* eslint no-magic-numbers: ["error", { "ignore": [1, 13, 9] }]*/
 
 const ROOT = document.querySelector('#app');
+const authorsCategoryName = 'authors';
 class quizResults extends HTMLElement {
   constructor() {
     super();
     this.quizType = this.dataset.type;
     this.currentImage = Number(this.dataset.category);
-    if (this.quizType === 'authors') this.currentImage += 12;
+    if (this.quizType === authorsCategoryName) this.currentImage += 12;
     this.category = this.currentImage;
     this.currentImage *= 10;
     this.lastImage = this.currentImage - 9;
@@ -71,7 +72,7 @@ class quizResults extends HTMLElement {
     });
     setTimeout(() => {
       this.style.transform = 'translateX(0)';
-    }, null);
+    }, 0);
   }
 }
 customElements.define('quiz-results', quizResults);

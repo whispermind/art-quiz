@@ -3,7 +3,7 @@
   height: 80vh;
   transform: translateX(-200vw);
   transition: transform 1s ease-in-out;
-  color: white;
+  color: #ffffff;
 }
 
 .quiz-container {
@@ -25,7 +25,7 @@
   font-size: 0.9rem;
 
   &:hover {
-    background-color: silver;
+    background-color: #c0c0c0;
   }
 }
 
@@ -45,12 +45,12 @@
 .answer {
   width: 50%;
   text-align: center;
-  border: solid 1px white;
+  border: solid 1px #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 
   &:hover {
-    background: silver;
+    background: #c0c0c0;
   }
 }
 
@@ -94,17 +94,17 @@
 }
 
 .wrong {
-  color: red;
+  color: #ff0000;
 
   & img {
-    border: solid 0.5px red;
+    border: solid 0.5px #ff0000;
   }
 }
 
 .correct {
-  color: green;
+  color: #008000;
 
   & img {
-    border: solid 0.5px green;
+    border: solid 0.5px #008000;
   }
 }
