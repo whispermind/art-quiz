@@ -3,6 +3,8 @@
 * {
   box-sizing: border-box;
   font-family: 'Indie Flower', cursive;
+  user-select: none;
+  outline: none;
 }
 
 a {
@@ -23,11 +25,21 @@ p {
 
 h1 {
   margin: 0;
+  white-space: nowrap;
+}
+
+html,
+body {
+  min-height: 100vh;
 }
 
 body {
-  background-image: url('../images/bg.jpg');
+  background: url('../images/bg1.jpg') top center;
+  position: relative;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 button {
@@ -36,11 +48,11 @@ button {
 
 .header,
 .footer {
-  height: 9vh;
+  min-height: 60px;
   display: flex;
   align-items: center;
   color: #ffffff;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .header,
@@ -49,20 +61,21 @@ button {
   padding: 0 20px;
 }
 
+main {
+  width: 100%;
+  min-height: 80vh;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .h1 {
   justify-self: center;
 }
 
 .footer {
-  justify-content: space-around;
-}
-
-#app {
-  min-height: 80vh;
-}
-
-.creator {
-  min-width: 350px;
+  justify-content: space-between;
 }
 
 .creator span {
@@ -74,7 +87,8 @@ button {
 }
 
 .rs svg {
-  width: 50%;
+  width: 100px;
+  height: 40px;
 
   & path {
     transition: fill .3s ease-in-out;

@@ -5,9 +5,9 @@
   align-items: center;
   column-gap: 30px;
   row-gap: 30px;
-  padding: 50px;
   transform: translateX(-100vw);
   transition: transform 1s ease-in-out;
+  flex-grow: 1;
 }
 
 .category-item {
@@ -40,7 +40,7 @@
   }
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.025);
   }
 
   &:hover .results-button {

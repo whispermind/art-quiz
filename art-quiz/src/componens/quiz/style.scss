@@ -1,21 +1,22 @@
 .quiz {
-  display: block;
-  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: translateX(-200vw);
   transition: transform 1s ease-in-out;
   color: #ffffff;
 }
 
 .quiz-container {
-  width: 600px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 1.5rem;
+  text-align: center;
+  font-size: 1rem;
+  max-width: 400px;
 
-  & img {
-    padding: 10px;
+  &>img {
+    width: 100%;
   }
 }
 
@@ -37,6 +38,7 @@
 }
 
 .answers {
+  margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -69,18 +71,27 @@
   }
 }
 
+.question {
+  margin-top: 10px;
+}
+
 .question-result,
 .total-result {
   display: none;
-  position: absolute;
+  position: fixed;
+  justify-content: center;
   text-align: center;
-  top: -9vh;
-  height: 100vh;
+  padding: 20px;
+  min-height: 100vh;
   width: 100vw;
   background-color: rgba($color: #000000, $alpha: 0.9);
   transition: transform 1s ease-in-out;
   transform: translateY(-200vh);
-  font-size: 2.5rem;
+  font-size: 2rem;
+}
+
+.question-result>* {
+  width: 400px;
 }
 
 .correct,
@@ -88,7 +99,6 @@
 .end,
 .show {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
 }
@@ -107,4 +117,12 @@
   & img {
     border: solid 0.5px #008000;
   }
+}
+
+.timer {
+  width: 50%;
+  min-height: 50px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 2rem;
 }
